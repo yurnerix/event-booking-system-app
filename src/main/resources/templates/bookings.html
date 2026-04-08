@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Бронирования</title>
+</head>
+<body>
+
+<h1>Список бронирований</h1>
+
+<a href="/bookings/create">
+  <button>Создать бронирование</button>
+</a>
+
+<br><br>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Пользователь</th>
+    <th>Ресурс</th>
+    <th>Начало</th>
+    <th>Окончание</th>
+    <th>Статус</th>
+    <th>Цель</th>
+    <th>Действие</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="booking : ${bookings}">
+    <td th:text="${booking.id}"></td>
+    <td th:text="${booking.username}"></td>
+    <td th:text="${booking.resourceName}"></td>
+    <td th:text="${booking.startTime}"></td>
+    <td th:text="${booking.endTime}"></td>
+    <td th:text="${booking.status}"></td>
+    <td th:text="${booking.purpose}"></td>
+    <td>
+      <form th:action="@{/bookings/status/{id}(id=${booking.id})}"
+            method="post"
+            style="display:inline;">
+        <select name="status">
+          <option th:each="statusValue : ${statuses}"
+                  th:value="${statusValue}"
+                  th:text="${statusValue}"
+                  th:selected="${statusValue == booking.status}">
+          </option>
+        </select>
+        <button type="submit">Изменить статус</button>
+      </form>
+
+      <form th:action="@{/bookings/cancel/{id}(id=${booking.id})}"
+            method="post"
+            style="display:inline;">
+        <button type="submit">Удалить</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+<a href="/">Назад на главную</a>
+
+</body>
+</html>

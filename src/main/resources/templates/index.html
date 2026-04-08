@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Система бронирования ресурсов</title>
+</head>
+<body>
+
+<h1>Добро пожаловать в систему бронирования ресурсов</h1>
+<p>Система бронирования ресурсов по времени</p>
+
+<div sec:authorize="isAnonymous()">
+  <a href="/login-page">
+    <button>Войти</button>
+  </a>
+
+  <a href="/register-page">
+    <button>Зарегистрироваться</button>
+  </a>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+  <p>
+    Вы вошли как:
+    <strong sec:authentication="name"></strong>
+  </p>
+
+  <a href="/resources">
+    <button>Посмотреть ресурсы</button>
+  </a>
+
+  <a href="/bookings">
+    <button>Посмотреть бронирования</button>
+  </a>
+
+  <a href="/notifications">
+    <button>Посмотреть уведомления</button>
+  </a>
+
+  <div sec:authorize="hasRole('ADMIN')">
+    <a href="/audit-logs">
+      <button>Посмотреть audit logs</button>
+    </a>
+  </div>
+
+  <form action="/perform-logout" method="post" style="display:inline;">
+    <button type="submit">Выйти</button>
+  </form>
+</div>
+
+</body>
+</html>

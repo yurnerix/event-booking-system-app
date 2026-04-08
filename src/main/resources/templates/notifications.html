@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои уведомления</title>
+</head>
+<body>
+
+<h1>Мои уведомления</h1>
+
+<form action="/notifications/clear" method="post">
+    <button type="submit">Очистить мои уведомления</button>
+</form>
+
+<br>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Тип</th>
+        <th>Сообщение</th>
+        <th>Прочитано</th>
+        <th>Дата создания</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notification : ${notifications}">
+        <td th:text="${notification.id}"></td>
+        <td th:text="${notification.type}"></td>
+        <td th:text="${notification.message}"></td>
+        <td th:text="${notification.read}"></td>
+        <td th:text="${notification.createdAt}"></td>
+        <td>
+            <form th:if="${!notification.read}"
+                  th:action="@{/notifications/read/{id}(id=${notification.id})}"
+                  method="post">
+                <button type="submit">Отметить как прочитанное</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<a href="/">Назад на главную</a>
+
+</body>
+</html>

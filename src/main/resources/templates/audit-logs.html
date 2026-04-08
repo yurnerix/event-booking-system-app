@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Журнал аудита</title>
+</head>
+<body>
+
+<h1>Журнал аудита</h1>
+
+<form action="/audit-logs/clear" method="post">
+  <button type="submit">Очистить все логи</button>
+</form>
+
+<br>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Тип действия</th>
+    <th>ID пользователя</th>
+    <th>ID бронирования</th>
+    <th>ID ресурса</th>
+    <th>Описание</th>
+    <th>Время</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="log : ${logs}">
+    <td th:text="${log.id}"></td>
+    <td th:text="${log.actionType}"></td>
+    <td th:text="${log.userId}"></td>
+    <td th:text="${log.bookingId}"></td>
+    <td th:text="${log.resourceId}"></td>
+    <td th:text="${log.details}"></td>
+    <td th:text="${log.timestamp}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+<a href="/">Назад на главную</a>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Список ресурсов</title>
+</head>
+<body>
+
+<h1>Список ресурсов</h1>
+
+<div sec:authorize="hasRole('ADMIN')">
+  <a href="/resources/create">
+    <button>Создать новый ресурс</button>
+  </a>
+  <br><br>
+</div>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Название</th>
+    <th>Описание</th>
+    <th>Тип</th>
+    <th>Локация</th>
+    <th>Вместимость</th>
+    <th>Активен</th>
+    <th>Доступен с</th>
+    <th>Доступен до</th>
+    <th sec:authorize="hasRole('ADMIN')">Действия</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="resource : ${resources}">
+    <td th:text="${resource.id}"></td>
+    <td th:text="${resource.name}"></td>
+    <td th:text="${resource.description}"></td>
+    <td th:text="${resource.type}"></td>
+    <td th:text="${resource.location}"></td>
+    <td th:text="${resource.capacity}"></td>
+    <td th:text="${resource.active}"></td>
+    <td th:text="${resource.availableFrom}"></td>
+    <td th:text="${resource.availableTo}"></td>
+
+    <td sec:authorize="hasRole('ADMIN')">
+      <a th:href="@{/resources/edit/{id}(id=${resource.id})}">
+        <button>Редактировать</button>
+      </a>
+
+      <form th:action="@{/resources/delete/{id}(id=${resource.id})}"
+            method="post"
+            style="display:inline;">
+        <button type="submit">Удалить</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+<a href="/">Назад на главную</a>
+
+</body>
+</html>

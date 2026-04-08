@@ -1,0 +1,8 @@
+package by.yurnerix.enums;
+
+public enum AuditActionType {
+    USER_REGISTERED,
+    RESOURCE_CREATED,
+    BOOKING_CREATED,
+    BOOKING_UPDATED, RESOURCE_UPDATED, RESOURCE_DELETED, BOOKING_CANCELLED
+}
